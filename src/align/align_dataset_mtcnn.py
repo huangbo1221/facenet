@@ -138,22 +138,24 @@ def main(args):
     print('Number of successfully aligned images: %d' % nrof_successfully_aligned)
             
 
-def parse_arguments(argv):
-    parser = argparse.ArgumentParser()
+def parse_arguments():
+    parser = argparse.ArgumentParser('hhh')
     
-    parser.add_argument('input_dir', type=str, help='Directory with unaligned images.')
-    parser.add_argument('output_dir', type=str, help='Directory with aligned face thumbnails.')
+    parser.add_argument('--input_dir', type=str, help='Directory with unaligned images.',default='/media/huangbo/software_disk/lfw_origin/raw')
+    parser.add_argument('--output_dir', type=str, help='Directory with aligned face thumbnails.',default='/media/huangbo/software_disk/lfw_origin/lfw_mtcnnpy_160')
     parser.add_argument('--image_size', type=int,
-        help='Image size (height, width) in pixels.', default=182)
+        help='Image size (height, width) in pixels.', default=160)#182
     parser.add_argument('--margin', type=int,
-        help='Margin for the crop around the bounding box (height, width) in pixels.', default=44)
+        help='Margin for the crop around the bounding box (height, width) in pixels.', default=32)#44
     parser.add_argument('--random_order', 
         help='Shuffles the order of images to enable alignment using multiple processes.', action='store_true')
     parser.add_argument('--gpu_memory_fraction', type=float,
         help='Upper bound on the amount of GPU memory that will be used by the process.', default=1.0)
     parser.add_argument('--detect_multiple_faces', type=bool,
                         help='Detect and align multiple faces per image.', default=False)
-    return parser.parse_args(argv)
+    args = parser.parse_args()
+    return args
 
 if __name__ == '__main__':
-    main(parse_arguments(sys.argv[1:]))
+    args = parse_arguments()
+    main(args)
